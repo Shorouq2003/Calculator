@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <div class="container">
+        <form>
+            <input type="text" class="num" id="display" readonly>
+            <div class="nums">
+                <div class="row1">
+                    <p onclick="press('7')">7</p>
+                    <p onclick="press('8')">8</p>
+                    <p onclick="press('9')">9</p>
+                    <p onclick="press('/');">/</p>
+                </div>
+                <div class="row2">
+                    <p onclick="press('4')">4</p>
+                    <p onclick="press('5')">5</p>
+                    <p onclick="press('6')">6</p>
+                    <p onclick="press('*');">*</p>
+                </div>
+                <div class="row3">
+                    <p onclick="press('1')">1</p>
+                    <p onclick="press('2')">2</p>
+                    <p onclick="press('3')">3</p>
+                    <p onclick=" press('-');">-</p>
+                </div>
+                <div class="row4">
+                    <p onclick="press('0')">0</p>
+                    <p onclick="press('.')">.</p>
+                    <p onclick=" press('+');">+</p>
+                    <p onclick="clearDisplay();">C</p>
+                </div>
+                <div class="row5">
+                    <p onclick="calculate()" id="result">=</p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+                                    <!-- js -->
+
+
+    <script>
+        let currentValue = '';   //القيمة الابتدائية
+        let previousValue = '';   //القيمة ال هتدخل بعد العملية
+        let operator ='';
+
+        function press(value) {     //function-->لما اضغط على رقم يتضاف ف ال input
+            currentValue += value;
+            document.getElementById('display').value = currentValue;
+        }
+
+        function calculate() {       // function--> لحساب الناتج
+            let displayValue = currentValue;       //المعادلة كاملة
+            let numbers = displayValue.split(/(\+|\-|\*|\/)/);  // تحويل المعادلة ل array باستخدام split
+            let result = parseFloat(numbers[0]);  // تحويل اول رقم لقيمة عشرية
+
+            for (let i = 1; i < numbers.length; i += 2) { //loop-->للعمليات i=1 العمليلة  ,  i+=2--> لان العملية يتتكرر كل مرتين
+                let operator = numbers[i];  // العملية
+                let nextNumber = parseFloat(numbers[i + 1]);  // الؤقم التانى بعد العملية
+
+                if (operator === '+') {
+                    result += nextNumber;
+                } else if (operator === '-') {
+                    result -= nextNumber;
+                } else if (operator === '*') {
+                    result *= nextNumber;
+                } else if (operator === '/') {
+                    result /= nextNumber;
+                }
+
+            document.getElementById('display').value = result;
+            currentValue = result.toString();  // تفضل ثابتة ف ال input
+        }
+    }
+
+        function clearDisplay() {   //مسح القيم -->c
+            currentValue = '';
+            previousValue = '';
+            operator = '';
+            document.getElementById('display').value = '';
+        }
+ </script>
+</body>
+</html>
